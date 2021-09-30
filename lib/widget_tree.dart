@@ -1,3 +1,4 @@
+import 'package:adminpanel/drawer/drawer_page.dart';
 import 'package:adminpanel/responsve_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,14 @@ class _WidgetTreeState extends State<WidgetTree> {
               ),
         preferredSize: const Size(double.infinity, 100),
       ),
+      body: ResponsiveLayout(
+        tiny: Container(),
+        tablet: Container(),
+        phone: Container(),
+        largetTablet: Container(),
+        computer: Container(),
+      ),
+      drawer: const Drawerpage(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:adminpanel/constants.dart';
 import 'package:adminpanel/widget_tree.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: "Dash",
       theme: ThemeData(
-          // scaffoldBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: Constants.purpleDark,
+          canvasColor: Constants.purpleLight,
           // pageTransitionsTheme: PageTransitionsTheme(builders: {
           //   TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
           //   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
