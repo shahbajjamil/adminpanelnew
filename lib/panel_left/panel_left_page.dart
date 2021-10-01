@@ -1,3 +1,5 @@
+import 'package:adminpanel/constants.dart';
+import 'package:adminpanel/responsve_layout.dart';
 import 'package:flutter/material.dart';
 
 class PanelLeftPage extends StatefulWidget {
@@ -11,8 +13,22 @@ class _PanelLeftPageState extends State<PanelLeftPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
+      body: Stack(
+        children: [
+          if (ResponsiveLayout.isComputer(context))
+            Container(
+              color: Constants.purpleLight,
+              width: 50,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Constants.purpleDark,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
