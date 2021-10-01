@@ -55,6 +55,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             const SizedBox(
               width: Constants.kPadding,
             ),
+            Spacer(),
             if (ResponsiveLayout.isComputer(context))
               ...List.generate(
                 _buttonNames.length,
@@ -78,11 +79,80 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                                 : Colors.white70,
                           ),
                         ),
+                        Container(
+                          margin: const EdgeInsets.all(Constants.kPadding / 2),
+                          width: 60,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              gradient: _currentSelectedButton == index
+                                  ? const LinearGradient(
+                                      colors: [
+                                        Constants.redDark,
+                                        Constants.orangeDark,
+                                      ],
+                                    )
+                                  : null),
+                        )
                       ],
                     ),
                   ),
                 ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.all(Constants.kPadding * 2),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _buttonNames[_currentSelectedButton],
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(Constants.kPadding / 2),
+                      width: 60,
+                      height: 2,
+                      decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                        colors: [
+                          Constants.redDark,
+                          Constants.orangeDark,
+                        ],
+                      )),
+                    ),
+                  ],
+                ),
               ),
+            Spacer(),
+            IconButton(
+              color: Colors.white,
+              iconSize: 30,
+              onPressed: () {},
+              icon: const Icon(Icons.search),
+            ),
+            Stack(
+              children: [
+                IconButton(
+                  color: Colors.white,
+                  iconSize: 30,
+                  onPressed: () {},
+                  icon: const Icon(Icons.notifications_none_outlined),
+                ),
+                const Positioned(
+                  child: CircleAvatar(
+                      backgroundColor: Colors.pink,
+                      radius: 8,
+                      child: Text(
+                        "3",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        ),
+                      )),
+                ),
+              ],
+            ),
           ],
         ));
   }
