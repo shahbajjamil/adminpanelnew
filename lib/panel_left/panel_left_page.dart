@@ -1,4 +1,6 @@
 import 'package:adminpanel/constants.dart';
+import 'package:adminpanel/panel_left/circle_graph.dart';
+import 'package:adminpanel/panel_left/curved_chart.dart';
 import 'package:adminpanel/responsve_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -83,8 +85,8 @@ class _PanelLeftPageState extends State<PanelLeftPage> {
                     ),
                   ),
                 ),
-                //graph1
-                //graph2
+                LineChartSample2(),
+                PieChartSample2(),
                 Padding(
                   padding: const EdgeInsets.only(
                       left: Constants.kPadding / 2,
