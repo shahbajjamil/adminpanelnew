@@ -58,157 +58,184 @@ class BarChartSample2State extends State<BarChartSample2> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  makeTransactionsIcon(),
-                  const SizedBox(
-                    width: 38,
-                  ),
-                  const Text(
-                    'Monthly Profits',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    r'$345,854',
-                    style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 38,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: BarChart(
-                    BarChartData(
-                      maxY: 20,
-                      barTouchData: BarTouchData(
-                          touchTooltipData: BarTouchTooltipData(
-                            tooltipBgColor: Colors.grey,
-                            getTooltipItem: (_a, _b, _c, _d) => null,
-                          ),
-                          touchCallback: (FlTouchEvent event, response) {
-                            if (response == null || response.spot == null) {
-                              setState(() {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                              });
-                              return;
-                            }
-
-                            touchedGroupIndex =
-                                response.spot!.touchedBarGroupIndex;
-
-                            setState(() {
-                              if (!event.isInterestedForInteractions) {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    // makeTransactionsIcon(),
+                    // const SizedBox(
+                    //   width: 38,
+                    // ),
+                    const Text(
+                      'Monthly Profits',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    const Text(
+                      r'$345,854',
+                      style: TextStyle(color: Color(0xff77839a), fontSize: 16),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Or",
+                      style:
+                          TextStyle(color: Constants.greenLight, fontSize: 16),
+                    ),
+                    const Text(
+                      'Sales',
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
+                    const Text(
+                      "and",
+                      style: TextStyle(color: Color(0xff77839a), fontSize: 16),
+                    ),
+                    const Text(
+                      'Order',
+                      style: TextStyle(color: Constants.redLight, fontSize: 22),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 38,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: BarChart(
+                      BarChartData(
+                        maxY: 20,
+                        barTouchData: BarTouchData(
+                            touchTooltipData: BarTouchTooltipData(
+                              tooltipBgColor: Colors.grey,
+                              getTooltipItem: (_a, _b, _c, _d) => null,
+                            ),
+                            touchCallback: (FlTouchEvent event, response) {
+                              if (response == null || response.spot == null) {
+                                setState(() {
+                                  touchedGroupIndex = -1;
+                                  showingBarGroups = List.of(rawBarGroups);
+                                });
                                 return;
                               }
-                              showingBarGroups = List.of(rawBarGroups);
-                              if (touchedGroupIndex != -1) {
-                                var sum = 0.0;
-                                for (var rod
-                                    in showingBarGroups[touchedGroupIndex]
-                                        .barRods) {
-                                  sum += rod.y;
-                                }
-                                final avg = sum /
-                                    showingBarGroups[touchedGroupIndex]
-                                        .barRods
-                                        .length;
 
-                                showingBarGroups[touchedGroupIndex] =
-                                    showingBarGroups[touchedGroupIndex]
-                                        .copyWith(
-                                  barRods: showingBarGroups[touchedGroupIndex]
-                                      .barRods
-                                      .map((rod) {
-                                    return rod.copyWith(y: avg);
-                                  }).toList(),
-                                );
+                              touchedGroupIndex =
+                                  response.spot!.touchedBarGroupIndex;
+
+                              setState(() {
+                                if (!event.isInterestedForInteractions) {
+                                  touchedGroupIndex = -1;
+                                  showingBarGroups = List.of(rawBarGroups);
+                                  return;
+                                }
+                                showingBarGroups = List.of(rawBarGroups);
+                                if (touchedGroupIndex != -1) {
+                                  var sum = 0.0;
+                                  for (var rod
+                                      in showingBarGroups[touchedGroupIndex]
+                                          .barRods) {
+                                    sum += rod.y;
+                                  }
+                                  final avg = sum /
+                                      showingBarGroups[touchedGroupIndex]
+                                          .barRods
+                                          .length;
+
+                                  showingBarGroups[touchedGroupIndex] =
+                                      showingBarGroups[touchedGroupIndex]
+                                          .copyWith(
+                                    barRods: showingBarGroups[touchedGroupIndex]
+                                        .barRods
+                                        .map((rod) {
+                                      return rod.copyWith(y: avg);
+                                    }).toList(),
+                                  );
+                                }
+                              });
+                            }),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          rightTitles: SideTitles(showTitles: false),
+                          topTitles: SideTitles(showTitles: false),
+                          bottomTitles: SideTitles(
+                            showTitles: true,
+                            getTextStyles: (context, value) => const TextStyle(
+                                color: Color(0xff7589a2),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            margin: 20,
+                            getTitles: (double value) {
+                              switch (value.toInt()) {
+                                case 0:
+                                  return 'Mn';
+                                case 1:
+                                  return 'Te';
+                                case 2:
+                                  return 'Wd';
+                                case 3:
+                                  return 'Tu';
+                                case 4:
+                                  return 'Fr';
+                                case 5:
+                                  return 'St';
+                                case 6:
+                                  return 'Sn';
+                                default:
+                                  return '';
                               }
-                            });
-                          }),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        rightTitles: SideTitles(showTitles: false),
-                        topTitles: SideTitles(showTitles: false),
-                        bottomTitles: SideTitles(
-                          showTitles: true,
-                          getTextStyles: (context, value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 20,
-                          getTitles: (double value) {
-                            switch (value.toInt()) {
-                              case 0:
-                                return 'Mn';
-                              case 1:
-                                return 'Te';
-                              case 2:
-                                return 'Wd';
-                              case 3:
-                                return 'Tu';
-                              case 4:
-                                return 'Fr';
-                              case 5:
-                                return 'St';
-                              case 6:
-                                return 'Sn';
-                              default:
+                            },
+                          ),
+                          leftTitles: SideTitles(
+                            showTitles: true,
+                            getTextStyles: (context, value) => const TextStyle(
+                                color: Color(0xff7589a2),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            margin: 8,
+                            reservedSize: 28,
+                            interval: 1,
+                            getTitles: (value) {
+                              if (value == 0) {
+                                return '1K';
+                              } else if (value == 10) {
+                                return '5K';
+                              } else if (value == 19) {
+                                return '10K';
+                              } else {
                                 return '';
-                            }
-                          },
+                              }
+                            },
+                          ),
                         ),
-                        leftTitles: SideTitles(
-                          showTitles: true,
-                          getTextStyles: (context, value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 8,
-                          reservedSize: 28,
-                          interval: 1,
-                          getTitles: (value) {
-                            if (value == 0) {
-                              return '1K';
-                            } else if (value == 10) {
-                              return '5K';
-                            } else if (value == 19) {
-                              return '10K';
-                            } else {
-                              return '';
-                            }
-                          },
+                        borderData: FlBorderData(
+                          show: false,
                         ),
+                        barGroups: showingBarGroups,
+                        gridData: FlGridData(show: false),
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
-                      gridData: FlGridData(show: false),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
+                const SizedBox(
+                  height: 12,
+                ),
+              ],
+            ),
           ),
         ),
       ),
